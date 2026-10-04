@@ -1,0 +1,81 @@
+{
+  "tested_commit": "7a79858860f9358e3074dff143b48dbd4c559a58",
+  "threads_calls": 0,
+  "gpt_calls": 0,
+  "method": "Original guard module; isolated temporary BASE; account connectivity mocked true; timestamps use current KST. Does not execute actual publishing path.",
+  "results": [
+    {
+      "case": "baseline valid fixture",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "missing approval",
+      "ok": false,
+      "reasons": [
+        "승인파일 존재: 승인 파일이 없음 — 발행 차단"
+      ]
+    },
+    {
+      "case": "tampered body",
+      "ok": false,
+      "reasons": [
+        "해시 일치: 불일치 — 승인 후 수정됨, 발행 차단"
+      ]
+    },
+    {
+      "case": "existing published record",
+      "ok": false,
+      "reasons": [
+        "중복 발행 없음: 동일 해시 발행 기록 1건"
+      ]
+    },
+    {
+      "case": "existing unknown record",
+      "ok": false,
+      "reasons": [
+        "결과 불명 없음: unknown 상태 존재 — 실게시 확인 필요"
+      ]
+    },
+    {
+      "case": "existing publishing record",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "affiliate true but NO URL",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "missing approver",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "same approval attempt one",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "same approval attempt two without any reservation",
+      "ok": true,
+      "reasons": []
+    },
+    {
+      "case": "missing approval process exit status",
+      "returncode": 0,
+      "json_ok": false
+    },
+    {
+      "case": "submitted GPT normal-case parser",
+      "response": "판정: 수정필요\n지적: 수정하면 통과 가능",
+      "classified_as_pass": true
+    },
+    {
+      "case": "submitted GPT normal-case parser",
+      "response": "판정: 반려\n지적: 위험한 표현입니다.\n수정안: 고친 뒤 통과 가능",
+      "classified_as_pass": false
+    }
+  ]
+}
