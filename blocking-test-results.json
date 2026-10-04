@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-04T23:15:46.277728",
+  "publish_post_called": false,
+  "cases": [
+    {
+      "case": "승인 없는 발행 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "승인파일 존재",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "승인파일 존재: 승인 파일이 없음 — 발행 차단"
+      ]
+    },
+    {
+      "case": "승인 후 수정 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "해시 일치",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "해시 일치: 불일치 — 승인 후 수정됨, 발행 차단"
+      ]
+    },
+    {
+      "case": "중복 발행 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "중복 발행 없음",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "중복 발행 없음: 동일 해시 발행 기록 1건"
+      ]
+    },
+    {
+      "case": "승인 만료 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "승인 유효기간",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "승인 유효기간: 110.0시간 경과"
+      ]
+    },
+    {
+      "case": "결과 불명 시 재발행 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "결과 불명 없음",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "결과 불명 없음: unknown 상태 존재 — 실게시 확인 필요"
+      ]
+    },
+    {
+      "case": "제휴 고지 누락 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "check_item": "제휴 정합성",
+      "expect_item_pass": false,
+      "exit_code": 2,
+      "passed": true,
+      "reasons": [
+        "제휴 정합성: 첫줄고지=False, 파트너스URL=False, 미치환토큰없음=False"
+      ]
+    },
+    {
+      "case": "정상 승인 통과 (체크만, 발행 없음)",
+      "expect_ok": true,
+      "got_ok": true,
+      "check_item": null,
+      "expect_item_pass": null,
+      "exit_code": 0,
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "case": "중복 크론 실행 차단",
+      "expect_ok": true,
+      "got_ok": true,
+      "must_contain": "",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "case": "최종본 재검수 — 정상본 통과",
+      "expect_ok": true,
+      "got_ok": true,
+      "must_contain": "",
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "case": "최종본 재검수 — 문제본 차단",
+      "expect_ok": false,
+      "got_ok": false,
+      "must_contain": "",
+      "passed": true,
+      "reasons": []
+    }
+  ],
+  "summary": "10/10 통과"
+}
