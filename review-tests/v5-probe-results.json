@@ -1,0 +1,147 @@
+{
+  "reviewed_commit": "9a6fdbce83c32c47e8a511dd7cbd0c4cb2460fd1",
+  "real_publish_calls": 0,
+  "real_gpt_calls": 0,
+  "probes": [
+    {
+      "name": "normal approval",
+      "observed": 0,
+      "expected_safe_behavior": 0
+    },
+    {
+      "name": "missing approval",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "body tamper",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "expired approval",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "existing published",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "existing unknown",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "existing publishing",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "affiliate URL absent",
+      "observed": 2,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "non-Coupang URL",
+      "observed": 0,
+      "expected_safe_behavior": 2
+    },
+    {
+      "name": "affiliate URL control",
+      "observed": 0,
+      "expected_safe_behavior": 0
+    },
+    {
+      "name": "old verdict false-positive",
+      "observed": false,
+      "expected_safe_behavior": false
+    },
+    {
+      "name": "two valid verdicts",
+      "observed": false,
+      "expected_safe_behavior": false
+    },
+    {
+      "name": "valid plus malformed verdict",
+      "observed": true,
+      "expected_safe_behavior": false
+    },
+    {
+      "name": "verdict not first line",
+      "observed": true,
+      "expected_safe_behavior": false
+    },
+    {
+      "name": "delayed second worker after first release",
+      "observed": {
+        "prechecks": [
+          0,
+          0
+        ],
+        "reservations": [
+          0,
+          0
+        ],
+        "fake_publish_calls": 2
+      },
+      "expected_safe_behavior": {
+        "fake_publish_calls": 1
+      }
+    },
+    {
+      "name": "non-owner releases active reservation",
+      "observed": {
+        "loser_exit": 1,
+        "release_stdout": "해제 1건",
+        "remaining_reservations": 0
+      },
+      "expected_safe_behavior": {
+        "remaining_reservations": 1
+      }
+    },
+    {
+      "name": "body changes between precheck and later file read",
+      "observed": {
+        "precheck_exit": 0,
+        "later_payload_matches_approval": false
+      },
+      "expected_safe_behavior": {
+        "later_payload_matches_approval": true
+      }
+    },
+    {
+      "name": "failed GPT process with parseable stdout",
+      "observed": {
+        "exit_code": 0,
+        "stdout": "{\"verdict\": \"통과\", \"pass\": true, \"reason\": \"\"}",
+        "stderr": ""
+      },
+      "expected_safe_behavior": {
+        "exit_code": 1,
+        "pass": false
+      }
+    }
+  ],
+  "muse_test_replays": [
+    {
+      "test": "test-verdict-parser.py",
+      "exit_code": 0,
+      "stdout": "[PASS] 정상 통과: pass=True (기대 True)\n[PASS] 수정필요 + '통과 가능' 설명: pass=False (기대 False)\n[PASS] 반려: pass=False (기대 False)\n[PASS] 빈 응답: pass=False (기대 False)\n[PASS] 판정 줄 없음: pass=False (기대 False)\n[PASS] 복수 판정: pass=False (기대 False)\n[PASS] 잘못된 값: pass=False (기대 False)\n[PASS] 형식 불일치: pass=False (기대 False)\n[PASS] 종료코드 0 (통과)\n[PASS] 종료코드 1 (차단)\n\n10/10 통과\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-guard.py",
+      "exit_code": 0,
+      "stdout": "[PASS] 정상 승인: 제휴 정합성=True (기대 True)\n[PASS] 승인 후 변조 차단: 해시 일치=False (기대 False)\n[PASS] 중복 발행 차단: False (기대 False)\n[PASS] unknown 차단: False (기대 False)\n[PASS] publishing 차단: False (기대 False)\n[PASS] stale publishing 원격확인 요구: False (기대 False)\n[PASS] 승인 만료: 승인 유효기간=False (기대 False)\n[PASS] affiliate 누락: 제휴 정합성=False (기대 False)\n[PASS] 제휴 URL 없음: 제휴 정합성=False (기대 False)\n[PASS] 제휴 고지 없음: 제휴 정합성=False (기대 False)\n[PASS] 제휴 정상: 제휴 정합성=True (기대 True)\n[PASS] 차단 시 종료코드 2 (실제 2)\n[PASS] 차단 시 JSON ok=false\n\n0건 실패\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-publish-path.py",
+      "exit_code": 0,
+      "stdout": "[PASS] 정상 경로: 게시 호출 1회 (기대 1회)\n[PASS] 차단: 승인 후 변조: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 승인 파일 없음: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 승인 만료: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 중복 발행: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 결과 불명: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 발행 진행 중: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 제휴 URL 없음: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 판정 수정필요: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 판정 없음: 게시 호출 0회 (기대 0회)\n[PASS] 동시 실행: 게시 호출 1회 (기대 최대 1회)\n\n0건 실패\n",
+      "stderr": ""
+    }
+  ]
+}
