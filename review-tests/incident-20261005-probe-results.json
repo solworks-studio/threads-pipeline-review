@@ -1,0 +1,104 @@
+{
+  "reviewed_commit": "a15334f978633fecf70081717fbb131a64ab4357",
+  "simulated_time": "2026-10-06T07:00:00+09:00",
+  "real_api_calls": 0,
+  "real_publish_calls": 0,
+  "cases": [
+    {
+      "name": "next-day approval without previous unknown",
+      "exit_code": 0,
+      "ok": true,
+      "selected_checks": [
+        {
+          "name": "발행일 일치",
+          "pass": true,
+          "detail": "scheduled_for=2026-10-06, 기준일=2026-10-06"
+        },
+        {
+          "name": "승인 유효기간",
+          "pass": true,
+          "detail": "45.8시간 경과"
+        },
+        {
+          "name": "결과 불명 없음",
+          "pass": true,
+          "detail": "없음"
+        }
+      ],
+      "reasons": []
+    },
+    {
+      "name": "next-day approval with previous-day same-hash unknown",
+      "exit_code": 2,
+      "ok": false,
+      "selected_checks": [
+        {
+          "name": "발행일 일치",
+          "pass": true,
+          "detail": "scheduled_for=2026-10-06, 기준일=2026-10-06"
+        },
+        {
+          "name": "승인 유효기간",
+          "pass": true,
+          "detail": "45.8시간 경과"
+        },
+        {
+          "name": "결과 불명 없음",
+          "pass": false,
+          "detail": "unknown 상태 존재 — 실게시 확인 필요"
+        }
+      ],
+      "reasons": [
+        "결과 불명 없음: unknown 상태 존재 — 실게시 확인 필요"
+      ]
+    },
+    {
+      "name": "only appending resolution metadata does not change guard state",
+      "exit_code": 2,
+      "ok": false,
+      "selected_checks": [
+        {
+          "name": "발행일 일치",
+          "pass": true,
+          "detail": "scheduled_for=2026-10-06, 기준일=2026-10-06"
+        },
+        {
+          "name": "승인 유효기간",
+          "pass": true,
+          "detail": "45.8시간 경과"
+        },
+        {
+          "name": "결과 불명 없음",
+          "pass": false,
+          "detail": "unknown 상태 존재 — 실게시 확인 필요"
+        }
+      ],
+      "reasons": [
+        "결과 불명 없음: unknown 상태 존재 — 실게시 확인 필요"
+      ]
+    },
+    {
+      "name": "control: explicit status transition after documented resolution",
+      "exit_code": 0,
+      "ok": true,
+      "selected_checks": [
+        {
+          "name": "발행일 일치",
+          "pass": true,
+          "detail": "scheduled_for=2026-10-06, 기준일=2026-10-06"
+        },
+        {
+          "name": "승인 유효기간",
+          "pass": true,
+          "detail": "45.8시간 경과"
+        },
+        {
+          "name": "결과 불명 없음",
+          "pass": true,
+          "detail": "없음"
+        }
+      ],
+      "reasons": []
+    }
+  ]
+}
