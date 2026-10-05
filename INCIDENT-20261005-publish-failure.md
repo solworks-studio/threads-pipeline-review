@@ -78,7 +78,28 @@
   (현재案은 단일 조회로 판단한다.)
 - 스케줄러의 좀비 "running" 상태를 우리 쪽에서 감지·보고하는 방법이 있는가?
 
-## 6. 관련 커밋
+## 7. 추기 (2026-10-05 14:45 KST) — 사망 지점 확정 및 unknown 처리
+
+런타임 복구로 동일 실행이 14:43에 재개되어 아래가 확정됐다:
+
+- 사망 지점: **`publish-post` 전송 중 실행 환경 재시작**. final-audit는 통과(판정: 통과)했었다.
+  (§3의 "판별 불가"는 해소됨.)
+- 실제 게시 여부 조회 (무조건 재발행 금지 준수):
+  - `profile-threads`: 0건 × 2회, `top-posts`: 0건, 에러 없음.
+  - `user-profile`: **post_count=1** 표시 — 게시물 목록과 불일치.
+  - 09:05 검증에서도 0건이었음.
+- 판단: **unknown**. 게시물이 실제로 올라갔을 가능성을 배제할 수 없어 재발행하지 않음.
+- 조치: `queue/published/20261005-intro-03.unknown.md` 기록 (SHA-256·상태·시각·사유),
+  `release-publish`로 예약 해제, `logs/20261005.md`에 단계별 로그 기록.
+  unknown 기록이 `pre-publish-check`의 "결과 불명 없음" 가드에 걸려 자동 재시도 차단됨.
+- 사용자 결정 대기: 재시도 vs 건너뛰기. 재시도 전 실제 게시 여부를 사용자가 직접 확인해야 함
+  (post_count=1 불일치 때문에 중복 게시 위험).
+
+위 내용은 F2(원격 확인 후 판단) 설계의 필요성을 뒷받침한다.
+`user-profile.post_count`와 `profile-threads` 목록의 불일치는
+"원격 확인" 수단 자체의 신뢰도 문제로, F2 설계 시 해소해야 한다.
+
+## 8. 관련 커밋
 
 - `9a6fdbc` — strict verdict parser, publish lock (reserve/release), exit codes
 - 사고 당시 운영 코드는 위 커밋 기준. `pre-publish-check` v2의 stale 판정
