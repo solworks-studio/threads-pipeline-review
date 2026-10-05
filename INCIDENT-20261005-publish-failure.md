@@ -99,7 +99,16 @@
 `user-profile.post_count`와 `profile-threads` 목록의 불일치는
 "원격 확인" 수단 자체의 신뢰도 문제로, F2 설계 시 해소해야 한다.
 
-## 8. 관련 커밋
+## 9. 해결 (2026-10-05 14:48 KST)
+
+- 사용자가 Threads 앱에서 직접 확인: 게시물 없음 → 실제 미발행 확정.
+  (post_count=1 표시는 API 불일치였음.)
+- 사용자 결정: "아침 7시 발행" 원칙에 따라 당일 재시도 없이 건너뜀.
+- `20261005-intro-03.failed.md`로 기록 (상태: failed, 사유 포함).
+  unknown 기록은 해소됨.
+- 다음 발행: 2026-10-06 07:00 (오늘 19:00 초안 → 저녁 승인 → 내일 아침 발행, 정상 플로우).
+
+## 10. 관련 커밋
 
 - `9a6fdbc` — strict verdict parser, publish lock (reserve/release), exit codes
 - 사고 당시 운영 코드는 위 커밋 기준. `pre-publish-check` v2의 stale 판정
