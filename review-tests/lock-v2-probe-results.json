@@ -1,0 +1,96 @@
+{
+  "reviewed_commit": "fbd149e2f0d896782ea0719e0416705b1bcdf625",
+  "real_api_calls": 0,
+  "real_publish_calls": 0,
+  "probes": [
+    {
+      "name": "wrong owner cannot release",
+      "observed": {
+        "exit_code": 1,
+        "reservations": 1
+      },
+      "expected_safe_behavior": {
+        "exit_code": 1,
+        "reservations": 1
+      }
+    },
+    {
+      "name": "B reads after A completed",
+      "observed": 3,
+      "expected_safe_behavior": 3
+    },
+    {
+      "name": "B snapshot before A publishes, B creates after A releases",
+      "observed": {
+        "B_reservation_exit": 0,
+        "fake_publish_calls": 2
+      },
+      "expected_safe_behavior": {
+        "B_reservation_denied": true,
+        "fake_publish_calls": 1
+      }
+    },
+    {
+      "name": "same hash different slugs with simultaneous snapshots",
+      "observed": {
+        "B_reservation_exit": 0,
+        "active_reservations": 2
+      },
+      "expected_safe_behavior": {
+        "B_reservation_denied": true,
+        "active_reservations": 1
+      }
+    },
+    {
+      "name": "real publisher uses captured verified bytes",
+      "observed": {
+        "exit_code": 0,
+        "cli_calls": 1,
+        "text_matches_approval": true
+      },
+      "expected_safe_behavior": {
+        "exit_code": 0,
+        "cli_calls": 1,
+        "text_matches_approval": true
+      }
+    },
+    {
+      "name": "mutation before publisher read blocked",
+      "observed": {
+        "exit_code": 2,
+        "additional_cli_calls": 0
+      },
+      "expected_safe_behavior": {
+        "exit_code": 2,
+        "additional_cli_calls": 0
+      }
+    },
+    {
+      "name": "CLI timeout log",
+      "observed": {
+        "exception": "TimeoutExpired",
+        "publish_begin": true,
+        "publish_result": false
+      },
+      "expected_safe_behavior": {
+        "controlled_failure": true,
+        "publish_begin": true,
+        "publish_result": true
+      }
+    }
+  ],
+  "muse_test_replays": [
+    {
+      "test": "test-lock-ownership.py",
+      "exit_code": 0,
+      "stdout": "[PASS] A 예약 성공 + 토큰 발급\n[PASS] B 예약 거부\n[PASS] 타인 토큰 해제 거부 + 예약 유지\n[PASS] 소유자 해제 성공\n[PASS] 토큰 없는 해제 거부\n[PASS] published 존재 시 예약 거부(exit 3)\n[PASS] unknown 존재 시 예약 거부(exit 3)\n[PASS] 해시 불일치 시 발행 차단\n[PASS] dry-run begin/result 로그\n[PASS] 동시 예약 승자 1명\n[PASS] 패자의 해제 시도 거부\n[PASS] 승자 해제 성공\n\n0건 실패\n",
+      "stderr": ""
+    },
+    {
+      "test": "test-publish-path-v2.py",
+      "exit_code": 0,
+      "stdout": "[PASS] 정상 경로: 게시 호출 1회 (기대 1회)\n[PASS] 차단: 승인 후 변조: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 승인 파일 없음: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 승인 만료: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 중복 발행: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 결과 불명: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 발행 진행 중: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 제휴 URL 없음: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 판정 수정필요: 게시 호출 0회 (기대 0회)\n[PASS] 차단: 판정 없음: 게시 호출 0회 (기대 0회)\n[PASS] 동시 실행: 게시 호출 1회 (기대 최대 1회)\n\n0건 실패\n",
+      "stderr": ""
+    }
+  ]
+}
