@@ -1,0 +1,194 @@
+{
+  "source_commit": "9efe13e",
+  "actual_publish_calls": 0,
+  "actual_api_calls": 0,
+  "submitted_linux_test_suite_rerun": false,
+  "probes": [
+    {
+      "case": "success",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: mock-id\n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id=mock-id record=20261007-case.md release_rc=0\n"
+    },
+    {
+      "case": "cli_failure",
+      "exit_code": 3,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.unknown.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: unknown\n- 시각: 2026-10-07 02:10 KST\n- 사유: publish-post 종료코드 3 (서버 반영 여부 불확실). 재발행 금지.\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result outcome=unknown reason=cli_error rc=3 record=20261007-case.unknown.md release_rc=0 stderr='mock failure'\n"
+    },
+    {
+      "case": "timeout",
+      "exit_code": 1,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.unknown.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: unknown\n- 시각: 2026-10-07 02:10 KST\n- 사유: publish-post 300초 타임아웃 (서버 반영 여부 불확실). 재발행 금지.\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result outcome=unknown reason=timeout elapsed=0.0 record=20261007-case.unknown.md release_rc=0 partial_stdout='partial-out' partial_stderr='partial-err'\n"
+    },
+    {
+      "case": "not_started",
+      "exit_code": 1,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {},
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result outcome=not_started reason=oserror error=mock executable missing\n"
+    },
+    {
+      "case": "hash_mismatch",
+      "exit_code": 2,
+      "exception": null,
+      "mock_calls": {
+        "publish": 0,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {},
+      "log": "02:10:29 publish_aborted reason=hash_mismatch expected=000000000000 actual=a47bc91c970b\n"
+    },
+    {
+      "case": "dry_run",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 0,
+        "release": 0
+      },
+      "reservation_remains": true,
+      "records": {},
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result dry_run ok\n"
+    },
+    {
+      "case": "missing_owner_token",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 0
+      },
+      "reservation_remains": true,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: mock-id\n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id=mock-id record=20261007-case.md release_rc=None\n"
+    },
+    {
+      "case": "wrong_owner_token",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": true,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: mock-id\n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id=mock-id record=20261007-case.md release_rc=1\n"
+    },
+    {
+      "case": "empty_success_output",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: \n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id= record=20261007-case.md release_rc=0\n"
+    },
+    {
+      "case": "invalid_success_output",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: \n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id= record=20261007-case.md release_rc=0\n"
+    },
+    {
+      "case": "release_failure",
+      "exit_code": 0,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": true,
+      "records": {
+        "20261007-case.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: published\n- 시각: 2026-10-07 02:10 KST\n- post_id: mock-id\n- 방식: publish-post-verified\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result ok post_id=mock-id record=20261007-case.md release_rc=1\n"
+    },
+    {
+      "case": "missing_body",
+      "exit_code": null,
+      "exception": "FileNotFoundError",
+      "mock_calls": {
+        "publish": 0,
+        "release": 0
+      },
+      "reservation_remains": true,
+      "records": {},
+      "log": ""
+    },
+    {
+      "case": "timeout_diagnostic_tail",
+      "exit_code": 1,
+      "exception": null,
+      "mock_calls": {
+        "publish": 1,
+        "release": 1
+      },
+      "reservation_remains": false,
+      "records": {
+        "20261007-case.unknown.md": "# 발행 기록\n- SHA-256: a47bc91c970b141843d1974609bf8f87b01d62570d58b07b8f096ec4a604d317\n- 상태: unknown\n- 시각: 2026-10-07 02:10 KST\n- 사유: publish-post 300초 타임아웃 (서버 반영 여부 불확실). 재발행 금지.\n"
+      },
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n02:10:29 publish_result outcome=unknown reason=timeout elapsed=0.0 record=20261007-case.unknown.md release_rc=0 partial_stdout='AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' partial_stderr=''\n"
+    },
+    {
+      "case": "output_decode_failure",
+      "exit_code": null,
+      "exception": "UnicodeDecodeError",
+      "mock_calls": {
+        "publish": 1,
+        "release": 0
+      },
+      "reservation_remains": true,
+      "records": {},
+      "log": "02:10:29 publish_begin sha=a47bc91c970b account=mock-account bytes=29\n"
+    }
+  ]
+}
