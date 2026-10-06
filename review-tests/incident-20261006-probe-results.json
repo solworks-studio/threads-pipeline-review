@@ -1,0 +1,60 @@
+{
+  "reviewed_commit": "2b6520a4fac7e342aa001e93e32b901c4d3ad3f3",
+  "real_api_calls": 0,
+  "real_publish_calls": 0,
+  "probes": [
+    {
+      "name": "timeout loses partial diagnostics",
+      "observed": {
+        "exit_code": null,
+        "stdout": "",
+        "stderr": "",
+        "exception": "TimeoutExpired"
+      },
+      "publish_begin_saved": true,
+      "publish_result_saved": false,
+      "partial_output_saved": false,
+      "partial_stderr_saved": false
+    },
+    {
+      "name": "same reservation released twice",
+      "exit_codes": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "October 7 at 07:00 without old unknown",
+      "simulated_time": "2026-10-07T07:00:00+09:00",
+      "exit_code": 0,
+      "ok": true,
+      "reasons": [],
+      "approval_age": "69.8시간 경과"
+    },
+    {
+      "name": "October 7 at 07:00 with October 6 same-hash unknown",
+      "simulated_time": "2026-10-07T07:00:00+09:00",
+      "exit_code": 2,
+      "ok": false,
+      "reasons": [
+        "결과 불명 없음: unknown 상태 존재 — 실게시 확인 필요"
+      ],
+      "approval_age": "69.8시간 경과"
+    },
+    {
+      "name": "October 7 after original approval TTL",
+      "simulated_time": "2026-10-07T09:14:00+09:00",
+      "exit_code": 2,
+      "ok": false,
+      "reasons": [
+        "승인 유효기간: 72.0시간 경과"
+      ],
+      "approval_age": "72.0시간 경과"
+    },
+    {
+      "name": "submitted precheck freshness",
+      "saved_approval_age": "30.2시간 경과",
+      "expected_age_at_today_run": "45.8시간 경과"
+    }
+  ]
+}
