@@ -68,13 +68,14 @@ check("성공: published 기록", any("ok1" in f and f.endswith(".md") and "unkn
 check("성공: 예약 해제됨", not has_publishing())
 check("성공: publish_result ok 로그", "publish_result ok" in log and "release_rc=0" in log)
 
-# 2. CLI 실패
+# 2. CLI 실패 (v4: CLI 종료코드는 전파하지 않는다 — rc=3이어도 래퍼는 1, cli_rc로만 기록)
 tok = reserve("fail1", make_case("fail1")[1])
 p, log = run(FAIL, "fail1", tok)
-check("실패: exit 3 전파", p.returncode == 3)
+check("실패: exit 1 (CLI rc=3 전파 안 함)", p.returncode == 1)
 check("실패: unknown 기록", any("fail1.unknown" in f for f in pub_files()))
 check("실패: 예약 해제됨", not has_publishing())
-check("실패: outcome=unknown 로그", "outcome=unknown" in log and "reason=cli_error" in log)
+check("실패: outcome=unknown + cli_rc=3 로그",
+      "outcome=unknown" in log and "reason=cli_error" in log and "cli_rc=3" in log)
 
 # 3. 타임아웃 (2초)
 tok = reserve("slow1", make_case("slow1")[1])
