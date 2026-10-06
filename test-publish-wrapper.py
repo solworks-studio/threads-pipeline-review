@@ -82,8 +82,15 @@ p, log = run(SLOW, "slow1", tok, extra=["--timeout", "2"])
 check("타임아웃: exit 1", p.returncode == 1)
 check("타임아웃: unknown 기록", any("slow1.unknown" in f for f in pub_files()))
 check("타임아웃: 예약 해제됨", not has_publishing())
+diagdir = os.path.join(tmp, "logs")
+diagtxt = ""
+if os.path.isdir(diagdir):
+    for d in os.listdir(diagdir):
+        if "slow1" in d:
+            diagtxt = open(os.path.join(diagdir, d), encoding="utf-8").read()
 check("타임아웃: reason=timeout + 부분 출력 보존",
-      "reason=timeout" in log and "partial-out" in log and "partial-err" in log)
+      "reason=timeout" in log and "diag=" in log
+      and "partial-out" in diagtxt and "partial-err" in diagtxt)
 
 # 4. CLI 없음 (OSError)
 tok = reserve("noexe", make_case("noexe")[1])
